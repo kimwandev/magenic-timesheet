@@ -3,16 +3,16 @@ import './styles/custom.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Button, Grid, Navbar, Nav, NavItem, Row, Jumbotron } from 'react-bootstrap';
+import { Button, Grid, Navbar, Nav, NavItem, Row, Jumbotron, Col } from 'react-bootstrap';
 
 var MainBody = React.createClass({
 
     render: function(){
         return (
-              <Jumbotron>
+              <Jumbotron className="hero-bg">
                 <h1>Magenic Timesheet</h1>
                 <p>This is a UI for creating magenic timesheet. Feel free to loaf around.</p>
-                <p><Button bsStyle="primary">Learn more</Button></p>
+                <p><Button bsStyle="primary" bsSize="large">Learn more</Button></p>
             </Jumbotron>
         )
     }
@@ -54,10 +54,11 @@ var MainFooter = React.createClass({
 
             <footer className="text-center">
                 <Row>
-                <Grid sm={12}>
-                    <p>Made by <a href="http://codepen/kimwan" rel="nofollow">Kimwan Ogot</a>. Contact him at <a href="mailto:kimo@magenic.com">kimo@magenic.com</a>.</p>
-                    <p>Copyright 2017</p>
-
+                <Grid>
+                    <Col sm={12}>
+                        <p>Made by <a href="http://codepen/kimwan" rel="nofollow">Kimwan Ogot</a>. Contact him at <a href="mailto:kimo@magenic.com">kimo@magenic.com</a>.</p>
+                        <p>Copyright 2017</p>
+                    </Col>
                 </Grid>
                 </Row>
 
