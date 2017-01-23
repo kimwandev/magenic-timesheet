@@ -47,21 +47,51 @@ var MainHeader = React.createClass({
     }
 })
 
+var Card = React.createClass({
+
+    render : function(){
+        return(
+            <div>
+                <h2>{this.props.header}</h2>
+                <p>
+                    <blockquote>{this.props.content}</blockquote>
+                </p>
+            </div>
+        )
+    }
+})
+
+var Section = React.createClass({
+
+    render: function(){
+        return(
+            <div className="well">
+                <div className="page-header">
+                <h1 id="navs"> {this.props.title}</h1>
+                </div>
+                    <Col sm={12}>
+                        {this.props.content}
+                    </Col>
+                    <div className="clearfix"></div>
+            </div>
+        )
+    }
+})
+
 var MainFooter = React.createClass({
     render:function(){
 
         return (
 
             <footer className="text-center">
+            <Grid>
                 <Row>
-                <Grid>
                     <Col sm={12}>
                         <p>Made by <a href="http://codepen/kimwan" rel="nofollow">Kimwan Ogot</a>. Contact him at <a href="mailto:kimo@magenic.com">kimo@magenic.com</a>.</p>
                         <p>Copyright 2017</p>
                     </Col>
-                </Grid>
                 </Row>
-
+            </Grid>
         </footer>
         )
     }
@@ -69,15 +99,48 @@ var MainFooter = React.createClass({
 });
 
 var Main = React.createClass({
+    getInitialState: function(){
 
+        return {
+            content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna leo, semper et dolor id, vestibulum condimentum nunc. Morbi porta tellus in leo rhoncus, nec efficitur diam vestibulum. Aliquam malesuada auctor lacus, ut sagittis nisl fermentum eget.'
+        }
+    },
+    getSectionContent:function(){
+            return(
+                <blockquote>
+                    {this.state.content}
+                </blockquote>
+            )
+
+    },
     render: function(){
         return(
             <div>
                 <MainHeader></MainHeader>
-                <Grid className="main-body">
-                    <MainBody></MainBody>
+                <Grid>
+                    <Row>
+                        <MainBody></MainBody>
+                    </Row>
+                    
+                    <Row>
+                        <Section title="Section" content={this.getSectionContent()}></Section>
+                    </Row>
+                    <Row>
+                        <Col sm={4}>
+                            <Card header="Card 1" content={this.state.content}></Card>
+                        </Col>
+                        <Col sm={4}>
+                            <Card header="Card 2" content={this.state.content}></Card>
+                        </Col>
+                        <Col sm={4}>
+                            <Card header="Card 3" content={this.state.content}></Card>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <MainFooter></MainFooter>
+                    </Row>
                 </Grid>
-                <MainFooter></MainFooter>
+
             </div>
         )
     }
