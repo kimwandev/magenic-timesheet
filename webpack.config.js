@@ -6,7 +6,7 @@ let extractLESS = new ExtractTextPlugin('styles/[name]-custom.css');
 const config = {
     devtool: 'inline-source-map',
     entry : {
-        main: './app/main.js'
+        main: './app/PageRouter.js'
     },
     output:{
         path: __dirname + '/public/',
