@@ -60,7 +60,13 @@ var NewTaskForm = React.createClass({
                         <StatusDropdown onStatusChange={this.onAddNewTaskModelStatusChanged} selectedStatus={this.state.currentStatus} />
                     </div>
                     <div className="row form-group">
-                        <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Add</button>
+                        <div className="col-sm-6">
+                            <button className="btn btn-warning btn-block" onClick={this.props.handleCancelAdd}>Cancel</button>
+                        
+                        </div>
+                        <div className="col-sm-6">
+                            <button className="btn btn-primary btn-block" onClick={this.handleSubmit}>Add</button>
+                        </div>
                     </div>
                     <div className="clearfix"></div>
                     </div>

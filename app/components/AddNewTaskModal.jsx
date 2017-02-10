@@ -3,7 +3,8 @@ import NewTaskForm from './NewTaskForm.jsx';
 
 var AddNewTaskModal = React.createClass({
     propTypes:{
-        showModal: React.PropTypes.bool.isRequired
+        showModal: React.PropTypes.bool.isRequired,
+        onCancel: React.PropTypes.func.isRequired
     },
     render: function(){
         if(this.props.showModal){
@@ -15,7 +16,7 @@ var AddNewTaskModal = React.createClass({
                                         <h4 className="modal-title">Add New Task</h4>
                                     </div>
                                     <div className="modal-body">
-                                        <NewTaskForm handleSubmit={this.props.handleAddNewTaskSubmit}></NewTaskForm>
+                                        <NewTaskForm handleSubmit={this.props.handleAddNewTaskSubmit} handleCancelAdd={this.props.onCancel}></NewTaskForm>
                                     </div>
                                     </div>
                                 </div>

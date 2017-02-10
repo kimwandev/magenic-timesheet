@@ -48,12 +48,15 @@ var TasksBoard = React.createClass({
         this.setState({currentPage:page, tasks:tasks});
     },
     handlePageSizeChange: function(event){
-        let value = event.target.value;
-        let tasks = taskService.getTasks(this.getSkipCount(this.state.currentPage), value, this.state.sortBy, this.state.sortOrder);
-        this.setState({pageSize: value, tasks: tasks});
+        let value = parseInt(event.target.value);
+        let tasks = taskService.getTasks(this.getSkipCount(1), value, this.state.sortBy, this.state.sortOrder);
+        this.setState({pageSize: value, tasks: tasks, currentPage: 1});
     },
     handleAddNewTask: function(){
         this.setState({shouldShowAddNewTaskForm: true});
+    },
+    handleCancelAdd:function(){
+        this.setState({shouldShowAddNewTaskForm: false});
     },
     handleAddNewTaskSubmit:function(addNewTaskModel){
         taskService.addNewTask(addNewTaskModel);
@@ -112,7 +115,7 @@ var TasksBoard = React.createClass({
                      <button className="btn btn-primary" onClick={this.handleAddNewTask} >Add New Task</button>
                 </Section>
                 
-                <AddNewTaskModal showModal={this.state.shouldShowAddNewTaskForm} handleAddNewTaskSubmit={this.handleAddNewTaskSubmit} />
+                <AddNewTaskModal showModal={this.state.shouldShowAddNewTaskForm} handleAddNewTaskSubmit={this.handleAddNewTaskSubmit} onCancel={this.handleCancelAdd} />
                 
             </div>
         )
