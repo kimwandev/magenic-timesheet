@@ -16,6 +16,7 @@ var EditableTaskTableRow = React.createClass({
 
        return{
             editTaskModel:{
+                name: this.props.task.name,
                 id: this.props.task.id,
                 description : this.props.task.description
             },
@@ -27,6 +28,12 @@ var EditableTaskTableRow = React.createClass({
         var description = event.target.value;
         var editTaskModel = this.state.editTaskModel;
         editTaskModel.description = description;
+        this.setState({editTaskModel: editTaskModel});
+    },
+    onChangeName:function(event){
+        var name = event.target.value;
+        var editTaskModel = this.state.editTaskModel;
+        editTaskModel.name = name;
         this.setState({editTaskModel: editTaskModel});
     },
     handleSaveEditTaskItem: function(){
@@ -43,7 +50,18 @@ var EditableTaskTableRow = React.createClass({
     render: function(){
         return (
             <tr>
-                <td><input type="text" className="form-control" value={this.state.editTaskModel.description} onChange={this.onChangeDescription} /></td>
+                <td>
+                    <div className="row form-group">
+                         <div className="col-sm-12">
+                             <input type="text" className="form-control" value={this.state.editTaskModel.name} onChange={this.onChangeName} />
+                         </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-12">
+                        <textarea className="form-control" value={this.state.editTaskModel.description} onChange={this.onChangeDescription}></textarea>
+                        </div>
+                    </div>
+                </td>
                 <td><PriorityDropdown onPriorityChange={this.handlePriorityChange} selectedPriority={this.state.currentPriority} /></td>
                 <td>
                     <StatusDropdown onStatusChange={this.handleStatusChange} selectedStatus={this.state.currentStatus}/>

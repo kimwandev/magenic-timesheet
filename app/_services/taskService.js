@@ -88,10 +88,29 @@ function _deleteTask(taskId){
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
+function _updateTaskItem(taskItem){
+    const tasksString = localStorage.getItem('tasks');
+    let tasks = JSON.parse(tasksString);
+    
+    var taskIndexToUpdate = -1;
+    for(let i = 0; i < tasks.length; i++){
+        if(tasks[i].id == taskItem.id){
+            taskIndexToUpdate = i;
+            break;
+        }
+    }
+
+    if(taskIndexToUpdate >= 0){
+        tasks[taskIndexToUpdate] = taskItem;
+    }
+  
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 module.exports = {
     getAllTasks: _getAllTasks,
     getTasks: _getTasks,
     addNewTask: _addNewTask,
-    deleteTaskById: _deleteTask
+    deleteTaskById: _deleteTask,
+    updateTaskItem: _updateTaskItem
 }

@@ -11,7 +11,7 @@ import data from '../_data/tasks.js';
 
 var taskList = JSON.parse(localStorage.getItem('tasks'));
 
-if(taskList.length <= 0){
+if(!taskList){
     localStorage.setItem('tasks', JSON.stringify(data));
 }
 
@@ -80,18 +80,9 @@ var TasksBoard = React.createClass({
         this.setState({tasks:tasks, totalTaskCount:totalTaskCount, currentPage: currentPage});
     },
     handleSaveTaskItem: function(task){
-        var data = this.state.tasks;
-        var indexToEdit = -1;
-        for(var i = 0; i < data.length; i++){
-            if(data[i].id == task.id){
-                indexToEdit = i;
-                break;
-            }
-        }
-        if(indexToEdit > -1){
-            data[i] = task;
-             this.setState({tasks : data});
-        }
+        taskService.updateTaskItem(task);
+        let tasks =  taskService.getTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
+        this.setState({tasks:tasks});
     },
     render: function() {
         return (
