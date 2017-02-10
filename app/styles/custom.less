@@ -1,5 +1,5 @@
 @white: #FFFFFF;
-
+@active: #337ab7;
 .main-body{
     min-height: 600px;
 }
@@ -25,4 +25,29 @@ ul {
 
 footer{
     margin-top:40px;
+}
+
+tr{
+    td{
+        &.sortable{
+            background-color:@active;
+            color:@white;
+            border-right:2px solid @white;
+            &:hover{
+                background-color:darken(@active, 5%);
+            }
+        }
+        &.disabled{
+            background-color:darken(@active, 5%);
+             color:@white;
+        }
+    }
+}
+
+.page-size{
+    margin-right:10px;
+}
+
+.modal{
+    background-color:rgba(0,0,0,0.4);
 }

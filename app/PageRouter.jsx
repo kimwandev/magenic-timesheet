@@ -1,12 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.css';
+import 'font-awesome/css/font-awesome.css';
+
 import './styles/custom.less';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router';
-import Home from './modules/Home.js';
-import About from './modules/About.js';
-import TasksBoard from './modules/TasksBoard.js';
+import Home from './modules/Home.jsx';
+import About from './modules/About.jsx';
+import TasksBoard from './modules/TasksBoard.jsx';
 
 ReactDOM.render(
     <Router history={hashHistory}>

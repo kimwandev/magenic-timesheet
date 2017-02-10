@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Grid} from 'react-bootstrap'
 
-import MainBody from '../components/MainBody.js';
-import MainHeader from '../components/MainHeader.js';
-import Card from '../components/Card.js';
-import Section from '../components/Section.js';
-import MainFooter from '../components/MainFooter.js';
+import MainBody from '../components/MainBody.jsx';
+import MainHeader from '../components/MainHeader.jsx';
+import Card from '../components/Card.jsx';
+import Section from '../components/Section.jsx';
+import MainFooter from '../components/MainFooter.jsx';
 
 
 var Home = React.createClass({

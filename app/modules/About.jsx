@@ -1,6 +1,6 @@
 import React from 'react';
-import MainHeader from '../components/MainHeader.js';
-import Section from '../components/Section.js';
+import MainHeader from '../components/MainHeader.jsx';
+import Section from '../components/Section.jsx';
 
 var About = React.createClass({
     render: function(){

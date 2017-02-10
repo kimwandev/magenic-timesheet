@@ -1,3 +1,5 @@
+import {priorities, statuses} from '../_data/lookup.js';
+
 function _getStatusById(id){
 
     switch (id) {
@@ -32,8 +34,34 @@ function _getPriorityById(id){
     }
 }
 
+function _getStatusObjectById(id){
+    var status;
+    statuses.map((item) => {
+        if(item.id == id){
+            status = item;
+        }
+    })
+
+    return status;
+}
+
+
+function _getPriorityObjectById(id){
+    var priority;
+    priorities.map((item) => {
+        if(item.id == id){
+            priority = item;
+        }
+    })
+
+    return priority;
+}
+
 module.exports = {
 
     GetStatusById : _getStatusById,
-    GetPriorityById: _getPriorityById
+    GetPriorityById: _getPriorityById,
+    GetStatusObjectById: _getStatusObjectById,
+    GetPriorityObjectById: _getPriorityObjectById
+
 }
