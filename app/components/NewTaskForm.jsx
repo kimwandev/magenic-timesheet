@@ -1,16 +1,15 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Section from './Section.jsx';
 import PriorityDropdown from './PriorityDropdown.jsx';
 import StatusDropdown from './StatusDropdown.jsx';
 
 import {priorities, statuses} from '../_data/lookup.js';
 
-var NewTaskForm = React.createClass({
-    propTypes:{
-        handleSubmit : React.PropTypes.func.isRequired
-    },
-    getInitialState: function(){
-            return {
+export default class NewTaskForm extends Component {
+    
+    constructor(props){
+        super(props);
+        this.state = {
                 addNewTaskModel: {
                     name: '',
                     description: '',
@@ -20,29 +19,41 @@ var NewTaskForm = React.createClass({
             currentPriority: priorities[0],
             currentStatus: statuses[0]
         }
-    },
-    onAddNewTaskModelNameChanged: function(event){
-        var addNewTaskModel = this.state.addNewTaskModel;
+        
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.onAddNewTaskModelNameChanged = this.onAddNewTaskModelNameChanged.bind(this);
+        this.onAddNewTaskModelDetailsChanged = this.onAddNewTaskModelDetailsChanged.bind(this);
+        this.onAddNewTaskModelPriorityChanged = this.onAddNewTaskModelPriorityChanged.bind(this);
+        this.onAddNewTaskModelStatusChanged = this.onAddNewTaskModelStatusChanged.bind(this);
+    }
+
+    onAddNewTaskModelNameChanged(event){
+        let addNewTaskModel = this.state.addNewTaskModel;
         addNewTaskModel.name = event.target.value;
         this.setState({addNewTaskModel: addNewTaskModel});
-    },
-    onAddNewTaskModelDetailsChanged: function(event){
-        var addNewTaskModel = this.state.addNewTaskModel;
+    }
+
+    onAddNewTaskModelDetailsChanged(event){
+        let addNewTaskModel = this.state.addNewTaskModel;
         addNewTaskModel.description = event.target.value;
         this.setState({addNewTaskModel: addNewTaskModel});
-    },
-    onAddNewTaskModelPriorityChanged: function(priority){
+    }
+    
+    onAddNewTaskModelPriorityChanged(priority){
         this.setState({currentPriority: priority});
-    },
-    onAddNewTaskModelStatusChanged: function(status){
+    }
+    
+    onAddNewTaskModelStatusChanged(status){
           this.setState({currentStatus: status});
-    },
-    handleSubmit:function(e){
+    }
+
+    handleSubmit(e){
         this.state.addNewTaskModel.priority = this.state.currentPriority.id;
         this.state.addNewTaskModel.statusId = this.state.currentStatus.id;
         this.props.handleSubmit(this.state.addNewTaskModel);
-    },
-    render: function(){
+    }
+
+    render(){
 
         return (
                 <div className="form row">
@@ -73,6 +84,8 @@ var NewTaskForm = React.createClass({
                 </div>
         )
     }
-});
+}
 
-module.exports = NewTaskForm;
+NewTaskForm.propTypes = {
+      handleSubmit : React.PropTypes.func.isRequired
+}

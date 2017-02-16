@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Grid, Row, Navbar, Nav, NavItem} from 'react-bootstrap';
 import { Link } from 'react-router';
 
-var MainHeader = React.createClass({
-    render: function(){
+export default class MainHeader extends Component{
+    constructor(){
+        super();
+    }
+    render(){
         return (
               <Grid fluid>
                 <Row>
@@ -34,6 +37,4 @@ var MainHeader = React.createClass({
               </Grid>
         )
     }
-});
-
-module.exports = MainHeader;
+};

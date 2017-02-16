@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Grid, Row, Col} from 'react-bootstrap';
 
-var MainFooter = React.createClass({
-    render:function(){
+export default class MainFooter extends Component{
+    constructor(){
+        super();
+    }
+    render(){
 
         return (
 
@@ -19,7 +22,4 @@ var MainFooter = React.createClass({
         )
     }
 
-});
-
-
-module.exports = MainFooter;
+};

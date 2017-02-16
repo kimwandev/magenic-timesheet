@@ -35,7 +35,7 @@ function _getPriorityById(id){
 }
 
 function _getStatusObjectById(id){
-    var status;
+    let status;
     statuses.map((item) => {
         if(item.id == id){
             status = item;
@@ -45,9 +45,8 @@ function _getStatusObjectById(id){
     return status;
 }
 
-
 function _getPriorityObjectById(id){
-    var priority;
+    let priority;
     priorities.map((item) => {
         if(item.id == id){
             priority = item;
@@ -57,7 +56,7 @@ function _getPriorityObjectById(id){
     return priority;
 }
 
-module.exports = {
+export default {
 
     GetStatusById : _getStatusById,
     GetPriorityById: _getPriorityById,

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Button, Jumbotron, Grid} from 'react-bootstrap';
 
-var MainBody = React.createClass({
-
-    render: function(){
+export default class MainBody extends Component{
+    constructor(){
+        super();
+    }
+    render (){
         return (
               <Grid>
                     <Jumbotron className="hero-bg">
@@ -14,6 +16,4 @@ var MainBody = React.createClass({
               </Grid>
         )
     }
-})
-
-module.exports = MainBody;
+}

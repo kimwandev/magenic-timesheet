@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-var SortableHeader = React.createClass({
-    propTypes: {
-        sortOrder: React.PropTypes.string,
-        sortBy: React.PropTypes.string,
-        sortHandler: React.PropTypes.func.isRequired,
-        headerData: React.PropTypes.array.isRequired
-    },
-    onSort: function(sortBy){
+export default class SortableHeader extends Component{
+    constructor(props){
+        super(props);
+
+        this.onSort = this.onSort.bind(this);
+        this.getColumnClass = this.getColumnClass.bind(this);
+    }
+
+    onSort(sortBy){
         if(sortBy == null){
             return;
         }
@@ -23,16 +24,18 @@ var SortableHeader = React.createClass({
                 this.props.sortHandler(sortBy, 'asc');
             }
         }
-    },
-    getColumnClass:function(sortName){
+    }
+    
+    getColumnClass(sortName){
         if(sortName){
             return 'sortable';
         }
         else{
             return 'disabled';
         }
-    },
-    render: function(){
+    }
+
+    render(){
         return (
             <tr>
                 {this.props.headerData.map((header) => {
@@ -47,7 +50,11 @@ var SortableHeader = React.createClass({
             </tr>
         )
     }
-});
+};
 
-
-module.exports = SortableHeader;
+SortableHeader.propTypes= {
+    sortOrder: React.PropTypes.string,
+    sortBy: React.PropTypes.string,
+    sortHandler: React.PropTypes.func.isRequired,
+    headerData: React.PropTypes.array.isRequired
+}

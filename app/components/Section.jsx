@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Col, Grid } from 'react-bootstrap';
 
-var Section = React.createClass({
+export default class Section extends Component{
 
-    render: function(){
+    render(){
         return(
             <Grid>
                 <div className="page-header">
@@ -16,6 +16,4 @@ var Section = React.createClass({
             </Grid>
         )
     }
-})
-
-module.exports = Section;
+}

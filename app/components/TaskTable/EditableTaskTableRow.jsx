@@ -1,53 +1,71 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PriorityDropdown from '../PriorityDropdown.jsx';
 import StatusDropdown from '../StatusDropdown.jsx';
 
 import utils from '../../_utils/utils.js';
 
-var EditableTaskTableRow = React.createClass({
-    propTypes: {
-        task: React.PropTypes.object.isRequired,
-        handleCancelEdit: React.PropTypes.func.isRequired,
-        handleSaveEditTaskItem: React.PropTypes.func.isRequired
-    },
-    getInitialState:function(){
-        var currentPriority = utils.GetPriorityObjectById(this.props.task.priority);
-        var currentStatus = utils.GetStatusObjectById(this.props.task.statusId);
-
-       return{
+export default class EditableTaskTableRow extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
             editTaskModel:{
-                name: this.props.task.name,
-                id: this.props.task.id,
-                description : this.props.task.description
+                name: '',
+                id: 0,
+                description : ''
             },
-            currentPriority: currentPriority,
-            currentStatus: currentStatus
-       } 
-    },
-    onChangeDescription:function(event){
-        var description = event.target.value;
-        var editTaskModel = this.state.editTaskModel;
+            currentPriority: '',
+            currentStatus: ''
+        }
+
+        this.handlePriorityChange = this.handlePriorityChange.bind(this);
+        this.handleSaveEditTaskItem = this.handleSaveEditTaskItem.bind(this);
+        this.handleStatusChange = this.handleStatusChange.bind(this);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeName = this.onChangeName.bind(this);
+    }
+
+    componentWillMount(){
+        const currentPriority = utils.GetPriorityObjectById(this.props.task.priority);
+        const currentStatus = utils.GetStatusObjectById(this.props.task.statusId);
+
+        let editTaskModel = {
+            name : this.props.task.name,
+            id: this.props.task.id,
+            description:this.props.task.description
+        }
+
+        this.setState({editTaskModel: editTaskModel, currentPriority:currentPriority, currentStatus: currentStatus});
+    }
+
+    onChangeDescription(event){
+        let description = event.target.value;
+        let editTaskModel = this.state.editTaskModel;
         editTaskModel.description = description;
         this.setState({editTaskModel: editTaskModel});
-    },
-    onChangeName:function(event){
-        var name = event.target.value;
-        var editTaskModel = this.state.editTaskModel;
+    }
+
+    onChangeName(event){
+        let name = event.target.value;
+        let editTaskModel = this.state.editTaskModel;
         editTaskModel.name = name;
         this.setState({editTaskModel: editTaskModel});
-    },
-    handleSaveEditTaskItem: function(){
+    }
+
+    handleSaveEditTaskItem(){
         this.state.editTaskModel.priority = this.state.currentPriority.id;
         this.state.editTaskModel.statusId = this.state.currentStatus.id;
         this.props.handleSaveEditTaskItem(this.state.editTaskModel);
-    },
-    handlePriorityChange: function(priority){
+    }
+
+    handlePriorityChange(priority){
         this.setState({currentPriority:priority});
-    },
-    handleStatusChange: function(status){
+    }
+
+    handleStatusChange(status){
         this.setState({currentStatus:status});
-    },
-    render: function(){
+    }
+
+    render(){
         return (
             <tr>
                 <td>
@@ -75,6 +93,10 @@ var EditableTaskTableRow = React.createClass({
             </tr>
         )
     }
-});
+}
 
-module.exports = EditableTaskTableRow;
+EditableTaskTableRow.propTypes = {
+    task: React.PropTypes.object.isRequired,
+    handleCancelEdit: React.PropTypes.func.isRequired,
+    handleSaveEditTaskItem: React.PropTypes.func.isRequired
+}

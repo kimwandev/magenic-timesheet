@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { Grid} from 'react-bootstrap'
-
+import React, {Component} from 'react';
 import MainBody from '../components/MainBody.jsx';
 import MainHeader from '../components/MainHeader.jsx';
 import Card from '../components/Card.jsx';
@@ -9,22 +6,25 @@ import Section from '../components/Section.jsx';
 import MainFooter from '../components/MainFooter.jsx';
 
 
-var Home = React.createClass({
-    getInitialState: function(){
+class Home extends Component{
+    constructor(){
+        super();
 
-        return {
+        this.state = {
             content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc urna leo, semper et dolor id, vestibulum condimentum nunc. Morbi porta tellus in leo rhoncus, nec efficitur diam vestibulum. Aliquam malesuada auctor lacus, ut sagittis nisl fermentum eget.'
         }
-    },
-    getSectionContent:function(){
+    };
+
+    getSectionContent(){
             return(
                 <blockquote>
                     {this.state.content}
                 </blockquote>
             )
 
-    },
-    render: function(){
+    }
+
+    render(){
         return(
             <div>
                 <MainHeader />
@@ -36,6 +36,6 @@ var Home = React.createClass({
             </div>
         )
     }
-})
+}
 
-module.exports = Home;
+export default Home;

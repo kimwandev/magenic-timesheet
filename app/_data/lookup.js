@@ -1,5 +1,5 @@
 
-    var _statuses = [
+    let statuses = [
         {
             id: 'Todo',
             name: 'To Do'
@@ -16,7 +16,7 @@
 
 
 
-    var _priorities = [
+    let priorities = [
         {
             id: 1,
             name: 'Low'
@@ -33,7 +33,4 @@
 
 
 
-module.exports = {
-    priorities : _priorities,
-    statuses : _statuses
-}
+export {priorities, statuses }

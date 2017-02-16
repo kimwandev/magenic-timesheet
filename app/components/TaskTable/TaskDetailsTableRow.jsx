@@ -1,13 +1,11 @@
- import React from 'react';
+ import React, {Component} from 'react';
  import utils from '../../_utils/utils.js';
 
-var TaskDetailsTableRow = React.createClass({
-    propTypes:{
-            task: React.PropTypes.object.isRequired,
-            handleDeleteTaskItem: React.PropTypes.func.isRequired,
-            handleEditTaskItemClick: React.PropTypes.func.isRequired
-        },
-    render: function(){
+export default class TaskDetailsTableRow extends Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
         return (
             <tr>
                 <td>{this.props.task.description}</td>
@@ -22,6 +20,10 @@ var TaskDetailsTableRow = React.createClass({
             </tr>
         )
     }
-});
+};
 
-module.exports = TaskDetailsTableRow;
+TaskDetailsTableRow.propTypes= {
+        task: React.PropTypes.object.isRequired,
+        handleDeleteTaskItem: React.PropTypes.func.isRequired,
+        handleEditTaskItemClick: React.PropTypes.func.isRequired
+}

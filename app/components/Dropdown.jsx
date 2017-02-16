@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 
-var Dropdown = React.createClass({
-    propTypes:{
-        options : React.PropTypes.array.isRequired,
-        selectedValue: React.PropTypes.any.isRequired,
-        selectHandler: React.PropTypes.func
-    },
-    render:function(){
+export default class Dropdown extends Component{
+    constructor(){
+        super();
+    }
+    
+    render(){
         return (
                  <select className="form-control" onChange={this.props.selectHandler} value={this.props.selectedValue}>
                     {this.props.options.map((option) => {
@@ -18,6 +17,10 @@ var Dropdown = React.createClass({
            
         )
     }
-});
+};
 
-module.exports = Dropdown;
+Dropdown.propType = {
+        options : React.PropTypes.array.isRequired,
+        selectedValue: React.PropTypes.any.isRequired,
+        selectHandler: React.PropTypes.func
+    }

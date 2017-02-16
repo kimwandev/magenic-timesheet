@@ -1,31 +1,33 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import TaskDetailsTableRow from './TaskDetailsTableRow.jsx';
 import EditableTaskTableRow from './EditableTaskTableRow.jsx';
 
-var TaskTableRow = React.createClass({
-    getInitialState: function(){
-        return {
-            isEditable: false
-        }
-    },
-    propTypes:{
-        task: React.PropTypes.object.isRequired,
-        handleDeleteTaskItem: React.PropTypes.func.isRequired,
-        handleSaveEditTaskItem: React.PropTypes.func.isRequired
-    },
-    handleEditTaskItemClick:function(){
+export default class TaskTableRow extends Component{
+    constructor(props){
+        super(props);
+
+        this.state = {  isEditable: false};
+        this.handleCancelEdit = this.handleCancelEdit.bind(this);
+        this.handleEditTaskItemClick = this.handleEditTaskItemClick.bind(this);
+        this.handleSaveEditTaskItem = this.handleSaveEditTaskItem.bind(this);
+    }
+    
+    handleEditTaskItemClick(){
         this.setState({isEditable: true});
-    },
-    handleSaveEditTaskItem:function(updatedTask){
+    }
+
+    handleSaveEditTaskItem(updatedTask){
         updatedTask.id = this.props.task.id;
         this.props.handleSaveEditTaskItem(updatedTask);
         this.setState({isEditable: false});
-    },
-    handleCancelEdit:function(){
+    }
+
+    handleCancelEdit(){
         this.setState({isEditable: false});
-    },
-    render: function(){
+    }
+
+    render(){
         if(this.state.isEditable){
             return (
                 <EditableTaskTableRow task={this.props.task} handleCancelEdit={this.handleCancelEdit} handleSaveEditTaskItem={this.handleSaveEditTaskItem} />
@@ -37,6 +39,10 @@ var TaskTableRow = React.createClass({
                     )
         }
     }
-});
+};
 
-module.exports = TaskTableRow;
+TaskTableRow.propTypes = {
+        task: React.PropTypes.object.isRequired,
+        handleDeleteTaskItem: React.PropTypes.func.isRequired,
+        handleSaveEditTaskItem: React.PropTypes.func.isRequired
+    };

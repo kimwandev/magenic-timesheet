@@ -1,9 +1,12 @@
 
-import React from 'react';
+import React, {Component} from 'react';
 
-var Card = React.createClass({
-
-    render : function(){
+export default class Card extends Component{
+    constructor(){
+        super();
+    }
+    
+    render(){
         return(
             <div>
                 <h2>{this.props.header}</h2>
@@ -13,6 +16,4 @@ var Card = React.createClass({
             </div>
         )
     }
-})
-
-module.exports = Card;
+}

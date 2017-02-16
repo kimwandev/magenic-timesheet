@@ -1,31 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 import TaskTableRow from './TaskTableRow.jsx';
 import SortableHeader from './SortableHeader.jsx';
 
 
-var TaskTable = React.createClass({
-    propTypes: {
-        handleDeleteTaskItem: React.PropTypes.func.isRequired,
-        handleSaveEditTaskItem: React.PropTypes.func.isRequired,
-        sortHandler: React.PropTypes.func.isRequired,
-        sortOrder: React.PropTypes.string,
-        sortBy: React.PropTypes.string
-    },
-    getInitialState:function(){
+export default class TaskTable extends Component{
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            headerData: []
+        }
+    }
+
+
+    componentWillMount(){
         let sortHeaderData = [];
 
         sortHeaderData.push({title:'Task Description', sortName: 'description'});
         sortHeaderData.push({title:'Priority', sortName: 'priority'});
         sortHeaderData.push({title:'Status', sortName: 'status'});
         sortHeaderData.push({title:'Actions', sortName: null});
-        return {
-            headerData: sortHeaderData
-        }
-    },
-    getSortableObject:function(){
 
-    },
-    render: function(){
+        this.setState({headerData: sortHeaderData});
+    }
+
+    getSortableObject(){
+
+    }
+
+    render(){
             return (
                     <table className="table table-striped">
                         <thead>
@@ -39,6 +42,13 @@ var TaskTable = React.createClass({
                     </table>
                     )
     }
-});
+};
 
-module.exports = TaskTable;
+
+TaskTable.propTypes = {
+        handleDeleteTaskItem: React.PropTypes.func.isRequired,
+        handleSaveEditTaskItem: React.PropTypes.func.isRequired,
+        sortHandler: React.PropTypes.func.isRequired,
+        sortOrder: React.PropTypes.string,
+        sortBy: React.PropTypes.string
+}

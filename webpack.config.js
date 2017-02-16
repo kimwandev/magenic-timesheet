@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+let ExtractTextPlugin = require("extract-text-webpack-plugin");
 let extractCSS = new ExtractTextPlugin('[name].css');
 let extractLESS = new ExtractTextPlugin('[name]-custom.css');
 

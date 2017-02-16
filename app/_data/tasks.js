@@ -1,4 +1,4 @@
-var tasks = [
+const tasks = [
     {
         id : 1,
         name: 'Assignment 1',
@@ -51,4 +51,4 @@ var tasks = [
     
 ]
 
-module.exports = tasks;
+export default tasks;

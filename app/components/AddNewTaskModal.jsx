@@ -1,12 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import NewTaskForm from './NewTaskForm.jsx';
 
-var AddNewTaskModal = React.createClass({
-    propTypes:{
-        showModal: React.PropTypes.bool.isRequired,
-        onCancel: React.PropTypes.func.isRequired
-    },
-    render: function(){
+export default class AddNewTaskModal extends Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
         if(this.props.showModal){
             return(
                 <div className="modal fade in" style={{display: 'block'}}>
@@ -28,6 +27,9 @@ var AddNewTaskModal = React.createClass({
             return null;
         }
     }
-});
+};
 
-module.exports = AddNewTaskModal;
+AddNewTaskModal.propTypes = {
+        showModal: React.PropTypes.bool.isRequired,
+        onCancel: React.PropTypes.func.isRequired
+};

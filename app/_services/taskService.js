@@ -73,7 +73,7 @@ function _deleteTask(taskId){
     const tasksString = localStorage.getItem('tasks');
     let tasks = JSON.parse(tasksString);
     
-    var taskIndexToRemove = -1;
+    let taskIndexToRemove = -1;
     for(let i = 0; i < tasks.length; i++){
         if(tasks[i].id == taskId){
             taskIndexToRemove = i;
@@ -92,7 +92,7 @@ function _updateTaskItem(taskItem){
     const tasksString = localStorage.getItem('tasks');
     let tasks = JSON.parse(tasksString);
     
-    var taskIndexToUpdate = -1;
+    let taskIndexToUpdate = -1;
     for(let i = 0; i < tasks.length; i++){
         if(tasks[i].id == taskItem.id){
             taskIndexToUpdate = i;
