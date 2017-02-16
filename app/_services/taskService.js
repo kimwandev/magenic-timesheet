@@ -111,7 +111,6 @@ function _updateTaskItem(taskItem){
 function _getTaskById(taskId){
     const tasksString = localStorage.getItem('tasks');
     let tasks = JSON.parse(tasksString);
-    console.log(taskId);
     return _.find(tasks, {id: taskId});
 }
 

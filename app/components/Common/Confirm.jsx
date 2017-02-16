@@ -5,7 +5,7 @@ class Confirm extends Component{
     render(){
          return (
             <div>
-                <p className="text-center">{this.props.confirmMessage}</p>
+                <div className="text-center">{this.props.confirmMessage}</div>
                 <div className="row">
                     <div className="col-sm-6">
                         <button className="btn btn-warning btn-block" onClick={this.props.onCancel}>No</button>

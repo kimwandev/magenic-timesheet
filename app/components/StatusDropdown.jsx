@@ -9,6 +9,8 @@ export default class StatusDropdown extends Component{
         super(props);
 
         this.state = { statuses:statuses };
+        this.handleSelectedStatusChange = this.handleSelectedStatusChange.bind(this);
+        this.getStatusOptions = this.getStatusOptions.bind(this);
     }
     
     getStatusOptions(){

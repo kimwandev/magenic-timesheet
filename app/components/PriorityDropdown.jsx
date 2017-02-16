@@ -12,6 +12,8 @@ export default class PriorityDropdown extends Component{
         this.state = {
             priorities:[]
         }
+        this.getPriorityOptions  = this.getPriorityOptions.bind(this);
+        this.handleSelectedPriorityChange = this.handleSelectedPriorityChange.bind(this);
     }
 
     componentWillMount(){
