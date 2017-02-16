@@ -3,9 +3,10 @@ import React, {Component}from 'react';
 import MainHeader from '../components/MainHeader.jsx';
 import Section from '../components/Section.jsx';
 import TaskTable from '../components/TaskTable/TaskTable.jsx';
-import AddNewTaskModal from '../components/AddNewTaskModal.jsx';
+import NewTaskForm from '../components/NewTaskForm.jsx';
 import Pagination from '../components/Pagination.jsx';
 import taskService from '../_services/taskService.js';
+import Confirm from '../components/Common/Confirm.jsx';
 
 //data
 import data from '../_data/tasks.js';
@@ -27,7 +28,9 @@ export default class TasksBoard extends Component{
             totalTaskCount: 0,
             shouldShowAddNewTaskForm: false,
             sortBy: null,
-            sortOrder: null
+            sortOrder: null,
+            taskIdToDelete: 0,
+            shouldShowDeleteConfirm: false
         }
 
         this.getLastPage = this.getLastPage.bind(this);
@@ -40,6 +43,9 @@ export default class TasksBoard extends Component{
         this.handleAddNewTaskSubmit = this.handleAddNewTaskSubmit.bind(this);
         this.handleDeleteTaskItem = this.handleDeleteTaskItem.bind(this);
         this.handleSaveTaskItem = this.handleSaveTaskItem.bind(this);
+        this.onDeleteTaskConfirm = this.onDeleteTaskConfirm.bind(this);
+        this.onCancelDeleteTask = this.onCancelDeleteTask.bind(this);
+        this.getConfirmDeleteMessage = this.getConfirmDeleteMessage.bind(this);
     }
     
     componentWillMount(){
@@ -88,8 +94,8 @@ export default class TasksBoard extends Component{
         this.setState({shouldShowAddNewTaskForm: false, tasks : data, currentPage: 1, totalTaskCount: totalTaskCount});
     }
 
-    handleDeleteTaskItem(taskId){
-        taskService.deleteTaskById(taskId);
+    onDeleteTaskConfirm(){
+        taskService.deleteTaskById(this.state.taskIdToDelete);
         const totalTaskCount = taskService.getAllTasks().length;
         let currentPage = this.state.currentPage;
         let tasks =  taskService.getTasks(this.getSkipCount(currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
@@ -101,7 +107,15 @@ export default class TasksBoard extends Component{
 
             tasks =  taskService.getTasks(this.getSkipCount(currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
         }
-        this.setState({tasks:tasks, totalTaskCount:totalTaskCount, currentPage: currentPage});
+        this.setState({tasks:tasks, totalTaskCount:totalTaskCount, currentPage: currentPage, shouldShowDeleteConfirm: false, taskIdToDelete: 0});
+    }
+
+    handleDeleteTaskItem(taskId){
+        this.setState({shouldShowDeleteConfirm: true, taskIdToDelete: taskId});
+    }
+
+    onCancelDeleteTask(){
+        this.setState({shouldShowDeleteConfirm: false, taskIdToDelete: 0});
     }
 
     handleSaveTaskItem(task){
@@ -109,6 +123,19 @@ export default class TasksBoard extends Component{
         let tasks =  taskService.getTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
         this.setState({tasks:tasks});
     }
+
+    getConfirmDeleteMessage(){
+        if(this.state.taskIdToDelete == 0)
+            return;
+        const task = taskService.getTaskById(this.state.taskIdToDelete);
+        return (
+            <div>
+                <span>Task ID: {task.id}</span><br />
+                <span>Name: {task.name}</span><br />
+            </div>
+        )
+    }
+
     render() {
         return (
             <div>
@@ -130,9 +157,8 @@ export default class TasksBoard extends Component{
                             onPagSizeChanged={this.handlePageSizeChange} />
                      <button className="btn btn-primary" onClick={this.handleAddNewTask} >Add New Task</button>
                 </Section>
-                
-                <AddNewTaskModal showModal={this.state.shouldShowAddNewTaskForm} handleAddNewTaskSubmit={this.handleAddNewTaskSubmit} onCancel={this.handleCancelAdd} />
-                
+                <Confirm showAsModal={true} modalTitle="Are you sure you want to delete this item?" confirmMessage={this.getConfirmDeleteMessage()} show={this.state.shouldShowDeleteConfirm} onConfirm={this.onDeleteTaskConfirm} onCancel={this.onCancelDeleteTask} />
+                <NewTaskForm show={this.state.shouldShowAddNewTaskForm} showAsModal={true} handleSubmit={this.handleAddNewTaskSubmit} handleCancelAdd={this.handleCancelAdd} modalTitle="Add New Task" />
             </div>
         )
     }

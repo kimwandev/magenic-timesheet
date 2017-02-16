@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import Section from './Section.jsx';
 import PriorityDropdown from './PriorityDropdown.jsx';
 import StatusDropdown from './StatusDropdown.jsx';
-
+import ModalHOC from './HOC/ModalHOC.jsx';
 import {priorities, statuses} from '../_data/lookup.js';
 
-export default class NewTaskForm extends Component {
+class NewTaskForm extends Component {
     
     constructor(props){
         super(props);
@@ -89,3 +89,5 @@ export default class NewTaskForm extends Component {
 NewTaskForm.propTypes = {
       handleSubmit : React.PropTypes.func.isRequired
 }
+
+export default ModalHOC(NewTaskForm);

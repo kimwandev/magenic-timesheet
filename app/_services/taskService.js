@@ -1,3 +1,4 @@
+import _ from 'lodash';
 
 function byDescription(a,b) {
   if (a.description < b.description)
@@ -107,10 +108,18 @@ function _updateTaskItem(taskItem){
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-module.exports = {
+function _getTaskById(taskId){
+    const tasksString = localStorage.getItem('tasks');
+    let tasks = JSON.parse(tasksString);
+    console.log(taskId);
+    return _.find(tasks, {id: taskId});
+}
+
+export default {
     getAllTasks: _getAllTasks,
     getTasks: _getTasks,
     addNewTask: _addNewTask,
     deleteTaskById: _deleteTask,
-    updateTaskItem: _updateTaskItem
+    updateTaskItem: _updateTaskItem,
+    getTaskById: _getTaskById
 }
