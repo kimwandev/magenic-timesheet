@@ -4,6 +4,8 @@ import Dropdown from './Dropdown.jsx';
 export default class Pagination extends Component{
     constructor(props){
         super(props);
+        this.handleNextPage = this.handleNextPage.bind(this);
+        this.handlePreviousPage = this.handlePreviousPage.bind(this);
     }
 
     getClass(page){

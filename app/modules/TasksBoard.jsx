@@ -1,18 +1,16 @@
-import tasks from '../_data/tasks.js';
 import React, {Component}from 'react';
 import MainHeader from '../components/MainHeader.jsx';
 import Section from '../components/Section.jsx';
 import TaskTable from '../components/TaskTable/TaskTable.jsx';
 import NewTaskForm from '../components/NewTaskForm.jsx';
 import Pagination from '../components/Pagination.jsx';
-import taskService from '../_services/taskService.js';
 import Confirm from '../components/Common/Confirm.jsx';
+import TaskStore from '../store/TaskStore.js';
+import * as TaskActions from '../actions/TaskActions.js';
 
 //data
 import data from '../_data/tasks.js';
-
 const taskList = JSON.parse(localStorage.getItem('tasks'));
-
 if(!taskList){
     localStorage.setItem('tasks', JSON.stringify(data));
 }
@@ -49,9 +47,13 @@ export default class TasksBoard extends Component{
     }
     
     componentWillMount(){
-        let tasksTotalCount = taskService.getAllTasks().length;
-        let taskArray = taskService.getTasks(0, 10);
-        this.setState({tasks: taskArray, totalTaskCount: tasksTotalCount});
+        
+        TaskStore.on('change', () => {
+            // alert(TaskStore.highPriorityTasks.length);
+            this.setState({tasks: TaskStore.tasks, totalTaskCount: TaskStore.totalTasksCount});
+        });
+
+        TaskActions.fetchTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize);
     }
 
     getLastPage(){
@@ -63,20 +65,19 @@ export default class TasksBoard extends Component{
     }
 
     handleSortTasks(sortBy, sortOrder){
-         let tasks = taskService.getTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, sortBy, sortOrder);
-         this.setState({sortBy: sortBy, sortOrder:sortOrder, tasks:tasks});
+         TaskActions.fetchTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, sortBy, sortOrder);
+         this.setState({sortBy: sortBy, sortOrder:sortOrder });
     }
 
     handlePageChange(page){
-        let tasks = taskService.getTasks(this.getSkipCount(page), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
-        
-        this.setState({currentPage:page, tasks:tasks});
+        TaskActions.fetchTasks(this.getSkipCount(page), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
+        this.setState({currentPage:page});
     }
 
     handlePageSizeChange(event){
         let value = parseInt(event.target.value);
-        let tasks = taskService.getTasks(this.getSkipCount(1), value, this.state.sortBy, this.state.sortOrder);
-        this.setState({pageSize: value, tasks: tasks, currentPage: 1});
+        TaskActions.fetchTasks(this.getSkipCount(1), value, this.state.sortBy, this.state.sortOrder);
+        this.setState({pageSize: value, currentPage: 1});
     }
 
     handleAddNewTask(){
@@ -88,26 +89,17 @@ export default class TasksBoard extends Component{
     }
 
     handleAddNewTaskSubmit(addNewTaskModel){
-        taskService.addNewTask(addNewTaskModel);
-        const data = taskService.getTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
-        const totalTaskCount = taskService.getAllTasks().length;
-        this.setState({shouldShowAddNewTaskForm: false, tasks : data, currentPage: 1, totalTaskCount: totalTaskCount});
+        TaskActions.createTask(addNewTaskModel);
+        this.setState({shouldShowAddNewTaskForm :false});
     }
 
     onDeleteTaskConfirm(){
-        taskService.deleteTaskById(this.state.taskIdToDelete);
-        const totalTaskCount = taskService.getAllTasks().length;
         let currentPage = this.state.currentPage;
-        let tasks =  taskService.getTasks(this.getSkipCount(currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
-        if(tasks.length == 0){
+        if(this.state.tasks.length == 1 && currentPage > 1){
             currentPage--;
-            if(currentPage < 0){
-                currentPage = 0;
-            }
-
-            tasks =  taskService.getTasks(this.getSkipCount(currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
         }
-        this.setState({tasks:tasks, totalTaskCount:totalTaskCount, currentPage: currentPage, shouldShowDeleteConfirm: false, taskIdToDelete: 0});
+        TaskActions.removeTask(this.state.taskIdToDelete, {skip:this.getSkipCount(currentPage), take: this.state.pageSize, sortBy: this.state.sortBy, sortOrder: this.state.sortOrder});
+        this.setState({shouldShowDeleteConfirm :false, currentPage: currentPage});
     }
 
     handleDeleteTaskItem(taskId){
@@ -119,21 +111,21 @@ export default class TasksBoard extends Component{
     }
 
     handleSaveTaskItem(task){
-        taskService.updateTaskItem(task);
-        let tasks =  taskService.getTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize, this.state.sortBy, this.state.sortOrder);
-        this.setState({tasks:tasks});
+        TaskActions.updateTask(task);
     }
 
     getConfirmDeleteMessage(){
         if(this.state.taskIdToDelete == 0)
             return;
-        const task = taskService.getTaskById(this.state.taskIdToDelete);
-        return (
+        const task = TaskStore.getById(this.state.taskIdToDelete);
+        if(task){
+            return (
             <div>
                 <span>Task ID: {task.id}</span><br />
                 <span>Name: {task.name}</span><br />
             </div>
         )
+        }
     }
 
     render() {

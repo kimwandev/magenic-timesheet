@@ -74,13 +74,7 @@ function _deleteTask(taskId){
     const tasksString = localStorage.getItem('tasks');
     let tasks = JSON.parse(tasksString);
     
-    let taskIndexToRemove = -1;
-    for(let i = 0; i < tasks.length; i++){
-        if(tasks[i].id == taskId){
-            taskIndexToRemove = i;
-            break;
-        }
-    }
+    let taskIndexToRemove = _.findIndex(tasks, {id: taskId});
 
     if(taskIndexToRemove >= 0){
         tasks.splice(taskIndexToRemove, 1);
@@ -93,13 +87,7 @@ function _updateTaskItem(taskItem){
     const tasksString = localStorage.getItem('tasks');
     let tasks = JSON.parse(tasksString);
     
-    let taskIndexToUpdate = -1;
-    for(let i = 0; i < tasks.length; i++){
-        if(tasks[i].id == taskItem.id){
-            taskIndexToUpdate = i;
-            break;
-        }
-    }
+    let taskIndexToUpdate = _.findIndex(tasks, {id: taskItem.id});
 
     if(taskIndexToUpdate >= 0){
         tasks[taskIndexToUpdate] = taskItem;
@@ -114,11 +102,17 @@ function _getTaskById(taskId){
     return _.find(tasks, {id: taskId});
 }
 
+function _getTasksByPriorityId(priorityId){
+    let tasks = _getAllTasks();
+    return _.filter(tasks, {priority: priorityId});
+}
+
 export default {
     getAllTasks: _getAllTasks,
     getTasks: _getTasks,
     addNewTask: _addNewTask,
     deleteTaskById: _deleteTask,
     updateTaskItem: _updateTaskItem,
-    getTaskById: _getTaskById
+    getTaskById: _getTaskById,
+    getTasksByPriorityId: _getTasksByPriorityId
 }
