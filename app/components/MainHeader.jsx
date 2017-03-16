@@ -67,9 +67,14 @@ export default class MainHeader extends Component{
                             <Link activeClassName="active" to="/Home">Home</Link>
                         </li>
                         <li>
-                            <Link activeClassName="active" to="/About">About</Link></li>
-                            <li>
-                            <Link activeClassName="active" to="/TasksBoard">Task Board</Link></li>
+                            <Link activeClassName="active" to="/About">About</Link>
+                        </li>
+                        <li>
+                            <Link activeClassName="active" to="/TasksBoard">Task Board</Link>
+                        </li>
+                        <li>
+                            <Link activeClassName="active" to="/Timer">Timer</Link>
+                        </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right" onMouseLeave={this.hidePriorityDropdown}>
                              <li className={this.getDropdownClass()}>

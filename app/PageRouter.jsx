@@ -9,6 +9,8 @@ import { Router, Route, hashHistory } from 'react-router';
 import Home from './modules/Home.jsx';
 import About from './modules/About.jsx';
 import TasksBoard from './modules/TasksBoard.jsx';
+import TaskTimer from './modules/TaskTimer.jsx';
+import TimerConfigs from './modules/TimerConfigs.jsx';
 
 ReactDOM.render(
     <Router history={hashHistory}>
@@ -16,5 +18,6 @@ ReactDOM.render(
         <Route path="/Home" component={Home}/>
         <Route path="/About" component={About}/>
         <Route path="/TasksBoard" component={TasksBoard}/>
+        <Route path="/TimerConfigs" component={TimerConfigs}/>
     </Router>
     , document.getElementById('root'));
