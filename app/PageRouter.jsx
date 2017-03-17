@@ -18,6 +18,7 @@ ReactDOM.render(
         <Route path="/Home" component={Home}/>
         <Route path="/About" component={About}/>
         <Route path="/TasksBoard" component={TasksBoard}/>
-        <Route path="/TimerConfigs" component={TimerConfigs}/>
+        <Route path="/TimerConfig" component={TimerConfigs}/>
+        <Route path="/PomodoroDashboard" component={TaskTimer}/>
     </Router>
     , document.getElementById('root'));

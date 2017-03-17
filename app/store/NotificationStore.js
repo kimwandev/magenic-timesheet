@@ -16,6 +16,10 @@ class NotificationStore extends EventEmitter{
                 this.notificationMessage = action.payload;
                 this.emit('change');
                 break;
+            case "SHOW_SUCCESS_MESSAGE":
+                this.notificationMessage = action.payload;
+                this.emit('change');
+                break;
         }
     }
 }

@@ -43,11 +43,12 @@ function _setCustomTimerConfig(timerConfig){
 }
 
 function _getCustomTimer(){
-    return JSON.parse(localStorage.getItem('customTimer'));
+    const customTimer = JSON.parse(localStorage.getItem('customTimer'));
+    return customTimer;
 }
 
 function _deleteCustomTimerConfig(){
-    localStorage.setItem('customTimer', null);
+    localStorage.removeItem('customTimer');
 }
 
 export default {

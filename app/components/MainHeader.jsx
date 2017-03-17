@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Grid, Row, Navbar, Nav, NavItem} from 'react-bootstrap';
 import { Link } from 'react-router';
 import TaskStore from '../store/TaskStore.js';
+import NotificationStore from '../store/NotificationStore.js';
 import * as TaskActions from '../actions/TaskActions.js';
 
 export default class MainHeader extends Component{
@@ -22,7 +23,7 @@ export default class MainHeader extends Component{
         TaskStore.on('change', () => {
             this.setState({hignPriorityTasks: TaskStore.highPriorityTasks});
         })
-        
+
         TaskActions.fetchTasksByPriority(3);
     }
 
@@ -73,7 +74,10 @@ export default class MainHeader extends Component{
                             <Link activeClassName="active" to="/TasksBoard">Task Board</Link>
                         </li>
                         <li>
-                            <Link activeClassName="active" to="/Timer">Timer</Link>
+                            <Link activeClassName="active" to="/TimerConfig">Timer Config</Link>
+                        </li>
+                        <li>
+                            <Link activeClassName="active" to="/PomodoroDashboard">Pomodoro Dashboard</Link>
                         </li>
                         </ul>
                         <ul className="nav navbar-nav navbar-right" onMouseLeave={this.hidePriorityDropdown}>

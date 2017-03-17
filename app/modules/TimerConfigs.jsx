@@ -10,8 +10,12 @@ class TimerConfigs extends Component{
         super();
         this.state = {
             timers: [],
-            currentTimer: {}
+            currentTimer: {},
+            showSuccess: false,
+            successMessage: ''
         }
+
+        this.showSuccess = this.showSuccess.bind(this); 
     }
 
     componentWillMount(){
@@ -21,7 +25,11 @@ class TimerConfigs extends Component{
         });
 
         NotificationStore.on('change', () => {
-            alert(NotificationStore.notificationMessage);
+            this.setState({successMessage: NotificationStore.notificationMessage, showSuccess: true});
+
+            setTimeout(() => {
+                this.setState({showSuccess: false});
+            }, 2000);
         });
 
         TimerActions.getDefaultTimer();
@@ -32,7 +40,18 @@ class TimerConfigs extends Component{
     }
 
     addNewTimeConfig(timerModel){
-        TimerActions.addTimer(timerModel);
+        TimerActions.setCustomTimerConfig(timerModel);
+    }
+
+    showSuccess(){
+        if(this.state.showSuccess){
+            return (
+                <div className="alert alert-dismissible alert-success">
+                        <button type="button" className="close" data-dismiss="alert">&times;</button>
+                        <strong>Well done!</strong> {this.state.successMessage}
+                </div>
+            )
+        }
     }
 
     render(){
@@ -41,8 +60,9 @@ class TimerConfigs extends Component{
                 <MainHeader />
                 <div className="container">
                     <div className="form-group">
-                        <EditableTimer timerModel={this.state.currentTimer} handleSubmit={this.addNewTimeConfig} handleRest={this.handleReset}/>
+                        <EditableTimer timerModel={this.state.currentTimer} handleSubmit={this.addNewTimeConfig} handleReset={this.handleReset}/>
                     </div>
+                    {this.showSuccess()}
                 </div>
             </div>
         )

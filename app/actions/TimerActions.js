@@ -18,7 +18,12 @@ export function resetConfigToDefault(){
     dispatcher.dispatch({
         type: 'GET_DEFAULT_TIMER',
         payload: timer
-    })
+    });
+
+    dispatcher.dispatch({
+        type: 'SHOW_SUCCESS_MESSAGE',
+        payload: 'Timer Config was Reset'
+    });
 }
 
 export function setCustomTimerConfig(customTimer){
@@ -26,6 +31,11 @@ export function setCustomTimerConfig(customTimer){
     dispatcher.dispatch({
         type: 'GET_CUSTOM_TIMER',
         payload: customTimer
+    })
+
+    dispatcher.dispatch({
+        type: 'SHOW_SUCCESS_MESSAGE',
+        payload: 'New Timer Config was Set'
     })
 }
 
