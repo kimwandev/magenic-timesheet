@@ -2,10 +2,30 @@ import dispatcher from '../dispatcher.js';
 import timerService from '../_services/timerService.js';
 
 export function getDefaultTimer(){
+    let timer = timerService.getCustomTimer();
+    if(!timer){
+        timer = timerService.getDefaultTimer();
+    }
+    dispatcher.dispatch({
+        type: 'GET_DEFAULT_TIMER',
+        payload: timer
+    })
+}
+
+export function resetConfigToDefault(){
+    timerService.deleteCustomTimerConfig();
     const timer = timerService.getDefaultTimer();
     dispatcher.dispatch({
         type: 'GET_DEFAULT_TIMER',
         payload: timer
+    })
+}
+
+export function setCustomTimerConfig(customTimer){
+    timerService.setCustomTimerConfig(customTimer);
+    dispatcher.dispatch({
+        type: 'GET_CUSTOM_TIMER',
+        payload: customTimer
     })
 }
 

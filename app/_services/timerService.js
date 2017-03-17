@@ -38,8 +38,23 @@ function _getAllTimerConfigs(){
      return timers;
 }
 
+function _setCustomTimerConfig(timerConfig){
+    localStorage.setItem('customTimer', JSON.stringify(timerConfig));
+}
+
+function _getCustomTimer(){
+    return JSON.parse(localStorage.getItem('customTimer'));
+}
+
+function _deleteCustomTimerConfig(){
+    localStorage.setItem('customTimer', null);
+}
+
 export default {
     getDefaultTimer : _getDefaultTimer,
     addTimerConfig : _addTimerConfig,
-    getAllTimerConfigs: _getAllTimerConfigs
+    getAllTimerConfigs: _getAllTimerConfigs,
+    setCustomTimerConfig: _setCustomTimerConfig,
+    deleteCustomTimerConfig: _deleteCustomTimerConfig,
+    getCustomTimer: _getCustomTimer
 }

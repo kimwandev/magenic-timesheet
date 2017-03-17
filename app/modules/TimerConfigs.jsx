@@ -16,13 +16,8 @@ class TimerConfigs extends Component{
 
     componentWillMount(){
         TimerStore.on('change', () => {
-            let timers = TimerStore.timerConfigs;
-
-            if(!timers){
-                timers = [];
-            }
-
-            this.setState({timers:timers, currentTimer: TimerStore.timerConfig});
+            console.log(TimerStore.timerConfig);
+            this.setState({currentTimer: TimerStore.timerConfig});
         });
 
         NotificationStore.on('change', () => {
@@ -30,7 +25,10 @@ class TimerConfigs extends Component{
         });
 
         TimerActions.getDefaultTimer();
-        TimerActions.getAllTimerConfigs();
+    }
+
+    handleReset(){
+        TimerActions.resetConfigToDefault();
     }
 
     addNewTimeConfig(timerModel){
@@ -43,19 +41,7 @@ class TimerConfigs extends Component{
                 <MainHeader />
                 <div className="container">
                     <div className="form-group">
-                        <EditableTimer timerModel={this.state.currentTimer} handleSubmit={this.addNewTimeConfig}/>
-                    </div>
-                    <div className="list-group">
-                        <a href="#" className="list-group-item disabled">
-                                <div>Pomodoro Timer (Default) </div>
-                                <div>Pomodoro: 1500 | Short Break: 300 | Long Break: 900</div>
-                        </a>
-                        {this.state.timers.map((timer) => {
-                            return (<a href="#" className="list-group-item">
-                                <div>{timer.timerName} </div>
-                                <div>Pomodoro: {timer.pomodoro} | Short Break: {timer.shortBreak} | Long Break: {timer.longBreak}</div>
-                            </a>)
-                        })}
+                        <EditableTimer timerModel={this.state.currentTimer} handleSubmit={this.addNewTimeConfig} handleRest={this.handleReset}/>
                     </div>
                 </div>
             </div>

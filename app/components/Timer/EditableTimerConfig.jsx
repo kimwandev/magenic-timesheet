@@ -44,6 +44,7 @@ class EditableTimer extends Component{
     render(){
         return(
             <div className="form">
+                <button className="btn btn-warning btn-block form-group" onClick={this.props.handleReset}>Reset and Save</button>
                 <div className="form-group">
                     <label className="control-label">Timer Config Name</label>
                     <input type="text" className="form-control" value={this.state.timerModel.timerName} onChange={this.handleTimerNameChange} />
@@ -70,7 +71,7 @@ class EditableTimer extends Component{
                         <span className="input-group-addon">ms</span>
                     </div>
                 </div>
-                <button className="btn btn-primary btn-block" onClick={this.props.handleSubmit.bind(null, this.state.timerModel)}>Submit</button>
+                <button className="btn btn-primary btn-block" onClick={this.props.handleSubmit.bind(null, this.state.timerModel)}>Save</button>
             </div>
         )
     }
@@ -78,6 +79,7 @@ class EditableTimer extends Component{
 
 EditableTimer.propType = {
     handleSubmit: React.PropTypes.func.isRequired,
+    handleReset: React.PropTypes.func.isRequired,
     timerModel: React.PropTypes.object.isRequired
 }
 

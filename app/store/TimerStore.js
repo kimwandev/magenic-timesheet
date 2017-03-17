@@ -25,7 +25,10 @@ class TimerStore extends EventEmitter{
                 this.timerConfigs = action.payload;
                 this.emit('change');
                 break;
-                
+            case "GET_CUSTOM_TIMER":
+                this.timerConfig = action.payload;
+                this.emit('change');
+                break;
         }
     }
 }
