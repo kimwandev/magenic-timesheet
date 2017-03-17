@@ -10,9 +10,25 @@ export function getDefaultTimer(){
 }
 
 export function addTimer(timer){
-    timerService.addTimerConfig(timer);
+    let success = timerService.addTimerConfig(timer);
+    if(success){
+        dispatcher.dispatch({
+            type: 'ADD_NEW_TIMER_CONFIG',
+            payload: timer
+        })
+    }
+    else{
+        dispatcher.dispatch({
+            type: 'SHOW_VALIDATION_MESSAGE',
+            payload: 'Duplicate Timer Name Not Allowed'
+        })
+    }
+}
+
+export function getAllTimerConfigs(){
+    var timers = timerService.getAllTimerConfigs();
     dispatcher.dispatch({
-        type: 'ADD_NEW_TIMER_CONFIG',
-        payload: timer
+        type: 'FETCH_ALL_TIMERS',
+        payload: timers
     })
 }

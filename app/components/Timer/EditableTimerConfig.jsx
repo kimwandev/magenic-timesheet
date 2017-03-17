@@ -50,15 +50,25 @@ class EditableTimer extends Component{
                 </div>
                 <div className="form-group">
                     <label className="control-label">Pomodoro</label>
-                    <input type="number" className="form-control" value={this.state.timerModel.pomodoro} onChange={this.handlePomodoroValueChange} />
+                    <div className="input-group">
+                        <input type="number" className="form-control" value={this.state.timerModel.pomodoro} onChange={this.handlePomodoroValueChange} />
+                        <span className="input-group-addon">ms</span>
+                    </div>
+                    
                 </div>
                 <div className="form-group">
                     <label className="control-label">Short Break</label>
-                    <input type="number" className="form-control" value={this.state.timerModel.shortBreak} onChange={this.handleShortBreakValueChange} />
+                    <div className="input-group">
+                        <input type="number" className="form-control" value={this.state.timerModel.shortBreak} onChange={this.handleShortBreakValueChange} />
+                        <span className="input-group-addon">ms</span>
+                    </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label">Long Break</label>
-                    <input type="number" className="form-control" value={this.state.timerModel.longBreak} onChange={this.handleLongBreakValueChange} />
+                    <div className="input-group">
+                        <input type="number" className="form-control" value={this.state.timerModel.longBreak} onChange={this.handleLongBreakValueChange} />
+                        <span className="input-group-addon">ms</span>
+                    </div>
                 </div>
                 <button className="btn btn-primary btn-block" onClick={this.props.handleSubmit.bind(null, this.state.timerModel)}>Submit</button>
             </div>

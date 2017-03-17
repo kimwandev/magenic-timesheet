@@ -1,6 +1,5 @@
 import {EventEmitter} from 'events';
 import Dispatcher from '../dispatcher.js';
-import timerService from '../_services/timerService.js';
 
 import _ from 'lodash';
 
@@ -22,6 +21,11 @@ class TimerStore extends EventEmitter{
                 this.timerConfigs.push(action.payload);
                 this.emit('change');
                 break;
+            case "FETCH_ALL_TIMERS":
+                this.timerConfigs = action.payload;
+                this.emit('change');
+                break;
+                
         }
     }
 }

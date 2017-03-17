@@ -6,17 +6,40 @@ function _getDefaultTimer(){
 }
 
 function _addTimerConfig(newTimer){
+    let success = true;
     const timerConfigsJsonString = localStorage.getItem('timers');
     let timers = JSON.parse(timerConfigsJsonString);
+
     if(!timers){
         timers = [];
     }
-    timers.push(newTimer);
-    localStorage.setItem('timers', JSON.stringify(newTimer));
 
+    let itemIndex = _.findIndex(timers, {timerName: newTimer.timerName});
+
+    if(itemIndex >= 0 || newTimer.timerName == 'Pomodoro Timer'){
+        success = false;
+    }
+    else{
+
+        timers.push(newTimer);
+        localStorage.setItem('timers', JSON.stringify(timers));
+    }
+    console.log(success);
+    return success;
+}
+
+function _getAllTimerConfigs(){
+     const timerConfigsJsonString = localStorage.getItem('timers');
+     let timers = JSON.parse(timerConfigsJsonString);
+     if(!timers){
+         timers = [];
+         localStorage.setItem('timers', JSON.stringify(timers));
+     }
+     return timers;
 }
 
 export default {
     getDefaultTimer : _getDefaultTimer,
-    addTimerConfig : _addTimerConfig
+    addTimerConfig : _addTimerConfig,
+    getAllTimerConfigs: _getAllTimerConfigs
 }
