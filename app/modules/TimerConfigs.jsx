@@ -12,31 +12,58 @@ class TimerConfigs extends Component{
             timers: [],
             currentTimer: {},
             showSuccess: false,
-            successMessage: ''
+            showValidation:false,
+            message: '',
+            messageAnimation: ''
+            
         }
 
         this.showSuccess = this.showSuccess.bind(this); 
+        this.getMessageAnimationClass = this.getMessageAnimationClass.bind(this);
+        this.notificationStoreChangeCallback = this.notificationStoreChangeCallback.bind(this);
+        this.timerStoreChangeCallback = this.timerStoreChangeCallback.bind(this);
     }
 
     componentWillMount(){
-        TimerStore.on('change', () => {
-            console.log(TimerStore.timerConfig);
-            this.setState({currentTimer: TimerStore.timerConfig});
-        });
+        TimerStore.on('change', this.timerStoreChangeCallback);
 
-        NotificationStore.on('change', () => {
-            this.setState({successMessage: NotificationStore.notificationMessage, showSuccess: true});
-
-            setTimeout(() => {
-                this.setState({showSuccess: false});
-            }, 2000);
-        });
+        NotificationStore.on('change', this.notificationStoreChangeCallback);
 
         TimerActions.getDefaultTimer();
     }
 
+    componentWillUnmount(){
+        TimerStore.removeListener('change', this.timerStoreChangeCallback);
+        NotificationStore.removeListener('change', this.notificationStoreChangeCallback);
+    }
+
+    timerStoreChangeCallback(){
+        this.setState({currentTimer: TimerStore.timerConfig});
+    }
+
+    notificationStoreChangeCallback(){
+        this.setState(
+            {
+                message: NotificationStore.notificationMessage, 
+                showSuccess: NotificationStore.shouldShowSuccess, 
+                showValidation: NotificationStore.shouldShowValidation,
+                messageAnimation: 'fadeIn'
+            });
+
+        setTimeout(() => {
+            this.setState(
+                {
+                    messageAnimation: 'fadeOut'
+                });
+        }, 4000);
+    }
+
     handleReset(){
         TimerActions.resetConfigToDefault();
+    }
+
+    getMessageAnimationClass(){
+        return 'animated ' + this.state.messageAnimation;
     }
 
     addNewTimeConfig(timerModel){
@@ -46,10 +73,26 @@ class TimerConfigs extends Component{
     showSuccess(){
         if(this.state.showSuccess){
             return (
-                <div className="alert alert-dismissible alert-success">
-                        <button type="button" className="close" data-dismiss="alert">&times;</button>
-                        <strong>Well done!</strong> {this.state.successMessage}
+                 <div className={this.getMessageAnimationClass()}>
+                    <div className="alert alert-dismissible alert-success animated">
+                            <button type="button" className="close" data-dismiss="alert">&times;</button>
+                            <strong>Well done!</strong> {this.state.message}
+                    </div>
                 </div>
+            )
+        }
+    }
+
+    showValidation(){
+        if(this.state.showValidation){
+            return (
+                <div className={this.getMessageAnimationClass()}>
+                    <div className="alert alert-dismissible alert-danger">
+                            <button type="button" className="close" data-dismiss="alert">&times;</button>
+                            <strong>Validation Error!</strong> {this.state.message}
+                    </div>
+                </div>
+
             )
         }
     }
@@ -63,6 +106,7 @@ class TimerConfigs extends Component{
                         <EditableTimer timerModel={this.state.currentTimer} handleSubmit={this.addNewTimeConfig} handleReset={this.handleReset}/>
                     </div>
                     {this.showSuccess()}
+                    {this.showValidation()}
                 </div>
             </div>
         )

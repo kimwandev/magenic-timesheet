@@ -36,7 +36,7 @@ class DigitalTImer extends Component{
 }
 
 DigitalTImer.propType = {
-    totalSeconds: React.PropTypes.number.isRequired,
+    totalMilliseconds: React.PropTypes.number.isRequired,
     shouldShowTimerColon: React.PropTypes.bool
 }
 

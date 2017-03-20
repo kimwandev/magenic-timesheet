@@ -27,16 +27,25 @@ export function resetConfigToDefault(){
 }
 
 export function setCustomTimerConfig(customTimer){
-    timerService.setCustomTimerConfig(customTimer);
-    dispatcher.dispatch({
-        type: 'GET_CUSTOM_TIMER',
-        payload: customTimer
-    })
 
-    dispatcher.dispatch({
-        type: 'SHOW_SUCCESS_MESSAGE',
-        payload: 'New Timer Config was Set'
-    })
+    if(customTimer.timerName == 'Pomodoro Timer'){
+        dispatcher.dispatch({
+            type: 'SHOW_VALIDATION_MESSAGE',
+            payload: 'Please choose different timer name than Pomodoro Timer'
+        })
+    } else{
+        timerService.setCustomTimerConfig(customTimer);
+        dispatcher.dispatch({
+            type: 'GET_CUSTOM_TIMER',
+            payload: customTimer
+        })
+
+        dispatcher.dispatch({
+            type: 'SHOW_SUCCESS_MESSAGE',
+            payload: 'New Timer Config was Set'
+        })
+    }
+
 }
 
 export function addTimer(timer){

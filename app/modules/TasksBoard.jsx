@@ -44,16 +44,22 @@ export default class TasksBoard extends Component{
         this.onDeleteTaskConfirm = this.onDeleteTaskConfirm.bind(this);
         this.onCancelDeleteTask = this.onCancelDeleteTask.bind(this);
         this.getConfirmDeleteMessage = this.getConfirmDeleteMessage.bind(this);
+        this.taskStoreChangeCallback = this.taskStoreChangeCallback.bind(this);
     }
     
     componentWillMount(){
         
-        TaskStore.on('change', () => {
-            // alert(TaskStore.highPriorityTasks.length);
-            this.setState({tasks: TaskStore.tasks, totalTaskCount: TaskStore.totalTasksCount});
-        });
+        TaskStore.on('change', this.taskStoreChangeCallback);
 
         TaskActions.fetchTasks(this.getSkipCount(this.state.currentPage), this.state.pageSize);
+    }
+
+    componentWillUnmount(){
+        TaskStore.removeListener('change', this.taskStoreChangeCallback);
+    }
+
+    taskStoreChangeCallback(){
+        this.setState({tasks: TaskStore.tasks, totalTaskCount: TaskStore.totalTasksCount});
     }
 
     getLastPage(){
@@ -117,14 +123,14 @@ export default class TasksBoard extends Component{
     getConfirmDeleteMessage(){
         if(this.state.taskIdToDelete == 0)
             return;
-        const task = TaskStore.getById(this.state.taskIdToDelete);
-        if(task){
-            return (
-            <div>
-                <span>Task ID: {task.id}</span><br />
-                <span>Name: {task.name}</span><br />
-            </div>
-        )
+            const task = TaskStore.getById(this.state.taskIdToDelete);
+            if(task){
+                return (
+                <div>
+                    <span>Task ID: {task.id}</span><br />
+                    <span>Name: {task.name}</span><br />
+                </div>
+            )
         }
     }
 

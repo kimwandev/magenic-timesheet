@@ -17,7 +17,7 @@ class TaskStore extends EventEmitter{
     add(task){
         this.totalTasksCount++;
         this.tasks.push(task);
-        if(task.priority == 3){
+        if(task.priority == 3 && task.statusId != 'Done'){
             this.highPriorityTasks.push(task);
         }
     }
@@ -26,14 +26,17 @@ class TaskStore extends EventEmitter{
         const index = _.findIndex(this.tasks, {id : task.id});
         this.tasks[index] = task;
 
-        const pTaxkIndex = _.findIndex(this.highPriorityTasks, {id : task.id});
-        if(pTaxkIndex >= 0){
-            this.highPriorityTasks.splice(pTaxkIndex, 1);
+        if(task.priority == 3 && task.statusId != 'Done'){
+            const pTaskIndex = _.findIndex(this.highPriorityTasks, ({id : task.id}));
+            if(pTaskIndex < 0){
+                this.highPriorityTasks.push(task);
+                
+            }
         }
         else{
-            this.highPriorityTasks.push(task);
+            const pTaskIndex = _.findIndex(this.highPriorityTasks, ({id : task.id}));
+            this.highPriorityTasks.splice(pTaskIndex, 1);
         }
-
     }
 
     remove(taskId){
@@ -41,9 +44,9 @@ class TaskStore extends EventEmitter{
         const index = _.findIndex(this.tasks, {id : taskId});
         this.tasks.splice(index, 1);
 
-        const pTaxkIndex = _.findIndex(this.highPriorityTasks, {id : taskId});
-        if(pTaxkIndex >= 0){
-            this.highPriorityTasks.splice(pTaxkIndex, 1);
+        const pTaskIndex = _.findIndex(this.highPriorityTasks, {id : taskId});
+        if(pTaskIndex >= 0){
+            this.highPriorityTasks.splice(pTaskIndex, 1);
         }
     }
 

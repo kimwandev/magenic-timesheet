@@ -53,9 +53,16 @@ function _getTasks(skip, take, sortBy, sortOrder){
         }
     }
 
-    tasks.splice(0, skip)
-    let lastItemIndex = tasks.length - 1;
-    tasks.splice(take, lastItemIndex);
+    // tasks = _.filter(tasks, (task) => {
+    //     return task.statusId == 'Todo' || task.statusId == 'Inprogress';
+    // })
+
+    if(skip != null && take != null){
+        tasks.splice(0, skip)
+        let lastItemIndex = tasks.length - 1;
+        tasks.splice(take, lastItemIndex);
+    }
+
 
     return tasks;
 }

@@ -7,8 +7,8 @@ const ModalHOC = (WrappedComponent) => {
                 if(this.props.showAsModal){
                     if(this.props.show){
                         return (
-                            <div className="modal fade in" style={{display: 'block'}}>
-                                <div className="modal-dialog">
+                            <div className="modal" style={{display: 'block'}}>
+                                <div className="modal-dialog animated bounceInDown">
                                     <div className="modal-content">
                                     <div className="modal-header">
                                         <h4 className="modal-title">{this.props.modalTitle}</h4>

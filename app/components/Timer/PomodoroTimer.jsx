@@ -7,19 +7,28 @@ class PomodoroTimer extends Component{
         super();
         this.state = {
             timerType : 'pomodoro',
-            timeInSeconds: 0,
+            timeInSecondss: 0,
         }
 
         this.setTimerType = this.setTimerType.bind(this);
         this.timerTimeoutHandler = this.timerTimeoutHandler.bind(this);
+        this.handleTimerStop = this.handleTimerStop.bind(this);
     }
 
     componentWillMount(){
-        this.setState({timeInSeconds: this.props.timerConfig.pomodoro});
+        this.setState({timeInSecondss: this.props.timerConfig.pomodoro});
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({timerType:"pomodoro", timeInSeconds: nextProps.timerConfig.pomodoro});
+        if(nextProps.timerConfig.timerName != this.props.timerConfig.timerName){
+             this.setState({timerType:"pomodoro", timeInSecondss: nextProps.timerConfig.pomodoro});
+        }
+    }
+
+    handleTimerStop(duration){
+        if(this.state.timerType != 'long'){
+            this.props.handleTimerStop(duration);
+        }
     }
 
     render(){
@@ -37,7 +46,7 @@ class PomodoroTimer extends Component{
                         </div>
                         <div className="row">
                             <h1 className="text-primary text-center">
-                                <Clock initialTimeInSeconds={this.state.timeInSeconds} handleTimeout={this.timerTimeoutHandler}/>
+                                <Clock initialTimeInSeconds={this.state.timeInSecondss} handleTimeout={this.timerTimeoutHandler} handleStopTime={this.handleTimerStop} handleTimerStart={this.props.handleTimerStart}/>
                             </h1>
                         </div>
                     </div>
@@ -68,16 +77,18 @@ class PomodoroTimer extends Component{
                 break;
         }
 
-        this.setState({timerType:value, timeInSeconds:timeInSeconds});
+        this.setState({timerType:value, timeInSecondss:timeInSeconds});
     }
 
     timerTimeoutHandler(){
-        alert('from timer');
+        alert(this.state.timerType + ' timer is Done!');
     }
 }
 
 PomodoroTimer.propType = {
-    timerConfig: React.PropTypes.object.isRequired
+    timerConfig: React.PropTypes.object.isRequired,
+    handleTimerStop: React.PropTypes.func,
+    handleTimerStart: React.PropTypes.func
 }
 
 export default PomodoroTimer;

@@ -9,7 +9,7 @@ export default class MainBody extends Component{
         return (
               <Grid>
                     <Jumbotron className="hero-bg">
-                    <h1>Magenic Timesheet</h1>
+                    <h1>Magenic +</h1>
                     <p>This is a UI for creating magenic timesheet. Feel free to loaf around.</p>
                     <p><Button bsStyle="primary" bsSize="large">Learn more</Button></p>
                     </Jumbotron>

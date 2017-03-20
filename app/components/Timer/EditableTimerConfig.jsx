@@ -44,7 +44,7 @@ class EditableTimer extends Component{
     render(){
         return(
             <div className="form">
-                <button className="btn btn-warning btn-block form-group" onClick={this.props.handleReset}>Reset and Save</button>
+                <div className="form-group"><button className="btn btn-warning btn-block" onClick={this.props.handleReset}>Reset to Default and Save</button></div>
                 <div className="form-group">
                     <label className="control-label">Timer Config Name</label>
                     <input type="text" className="form-control" value={this.state.timerModel.timerName} onChange={this.handleTimerNameChange} />
@@ -53,7 +53,7 @@ class EditableTimer extends Component{
                     <label className="control-label">Pomodoro</label>
                     <div className="input-group">
                         <input type="number" className="form-control" value={this.state.timerModel.pomodoro} onChange={this.handlePomodoroValueChange} />
-                        <span className="input-group-addon">ms</span>
+                        <span className="input-group-addon">seconds</span>
                     </div>
                     
                 </div>
@@ -61,14 +61,14 @@ class EditableTimer extends Component{
                     <label className="control-label">Short Break</label>
                     <div className="input-group">
                         <input type="number" className="form-control" value={this.state.timerModel.shortBreak} onChange={this.handleShortBreakValueChange} />
-                        <span className="input-group-addon">ms</span>
+                        <span className="input-group-addon">seconds</span>
                     </div>
                 </div>
                 <div className="form-group">
                     <label className="control-label">Long Break</label>
                     <div className="input-group">
                         <input type="number" className="form-control" value={this.state.timerModel.longBreak} onChange={this.handleLongBreakValueChange} />
-                        <span className="input-group-addon">ms</span>
+                        <span className="input-group-addon">seconds</span>
                     </div>
                 </div>
                 <button className="btn btn-primary btn-block" onClick={this.props.handleSubmit.bind(null, this.state.timerModel)}>Save</button>

@@ -5,7 +5,8 @@ const tasks = [
         description: 'Scaffold a ReactJS Project using NPM, Webpack and Babel',
         priority: 1,
         statusId: 'Todo',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 2,
@@ -13,7 +14,8 @@ const tasks = [
         description: 'Create a task table',
         priority: 2,
         statusId: 'Inprogress',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 3,
@@ -21,7 +23,8 @@ const tasks = [
         description: 'Complete User Stories',
         priority: 3,
         statusId: 'Done',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 4,
@@ -29,7 +32,8 @@ const tasks = [
         description: 'Bcg ESF Project',
         priority: 1,
         statusId: 'Todo',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 5,
@@ -37,7 +41,8 @@ const tasks = [
         description: 'Project 1 Description',
         priority: 1,
         statusId: 'Todo',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 6,
@@ -45,7 +50,8 @@ const tasks = [
         description: 'Project 2 Description',
         priority: 1,
         statusId: 'Todo',
-        timerId: null
+        timerId: null,
+        duration:0
     },
     {
         id : 7,
@@ -53,7 +59,8 @@ const tasks = [
         description: 'Project 3 Description',
         priority: 1,
         statusId: 'Todo',
-        timerId: null
+        timerId: null,
+        duration:0
     }
     
 ]

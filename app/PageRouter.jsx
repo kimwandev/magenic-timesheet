@@ -19,6 +19,9 @@ ReactDOM.render(
         <Route path="/About" component={About}/>
         <Route path="/TasksBoard" component={TasksBoard}/>
         <Route path="/TimerConfig" component={TimerConfigs}/>
-        <Route path="/PomodoroDashboard" component={TaskTimer}/>
+        <Route path="/PomodoroDashboard" component={TaskTimer}>
+            <Route path="/PomodoroDashboard/:taskId" component={TaskTimer}/>
+        </Route>
+        
     </Router>
     , document.getElementById('root'));
