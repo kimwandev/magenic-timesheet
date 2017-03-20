@@ -1,14 +1,33 @@
  import React, {Component} from 'react';
  import utils from '../../_utils/utils.js';
+ import { Link } from 'react-router';
 
 export default class TaskDetailsTableRow extends Component{
     constructor(props){
         super(props);
+        this.renderTaskDescription = this.renderTaskDescription.bind(this);
     }
+
+    getPomodoroTaskLink(task){
+        return "/PomodoroDashboard/" + task.id;
+    }
+
+    renderTaskDescription(){
+         if(this.props.task.statusId != 'Done'){
+            return <Link to={this.getPomodoroTaskLink(this.props.task)}>{this.props.task.description}</Link>
+         }
+         else{
+            return <span>{this.props.task.description}</span>
+         }
+         
+    }
+
     render(){
         return (
             <tr>
-                <td>{this.props.task.description}</td>
+                <td>
+                    {this.renderTaskDescription()}
+                </td>
                 <td>{utils.GetPriorityById(this.props.task.priority)}</td>
                 <td>{utils.GetStatusById(this.props.task.statusId)}</td>
                 <td>
